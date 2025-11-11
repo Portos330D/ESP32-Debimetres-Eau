@@ -1,1 +1,202 @@
 
+esphome:
+  name: debitmetres-eau
+  friendly_name: Débitmètres Eau Maison / Garage / Cumulus
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: none
+  fast_connect: true
+
+logger:
+api:
+ota:
+  platform: esphome
+
+number:
+  - platform: template
+    name: "Impulsions/Litre Eau Maison"
+    id: ppl_maison
+    optimistic: true
+    min_value: 200
+    max_value: 800
+    step: 1
+    restore_value: true
+    initial_value: 313
+    unit_of_measurement: "pulses/L"
+
+  - platform: template
+    name: "Impulsions/Litre Eau Garage"
+    id: ppl_garage
+    optimistic: true
+    min_value: 200
+    max_value: 800
+    step: 1
+    restore_value: true
+    initial_value: 313
+    unit_of_measurement: "pulses/L"
+
+  - platform: template
+    name: "Impulsions/Litre Eau Cumulus"
+    id: ppl_cumulus
+    optimistic: true
+    min_value: 200
+    max_value: 800
+    step: 1
+    restore_value: true
+    initial_value: 664
+    unit_of_measurement: "pulses/L"
+
+sensor:
+  - platform: pulse_meter
+    id: pulse_maison
+    pin:
+      number: GPIO13
+      mode: INPUT_PULLUP
+    name: "Débitmètre Eau Maison (pulses/min)"
+    internal_filter: 100us
+    accuracy_decimals: 0
+    timeout: 5s
+    total:
+      id: pulse_maison_total
+      name: "Volume Eau Maison brut"
+      unit_of_measurement: "pulses"
+      accuracy_decimals: 0
+    filters:
+      - multiply: 1.0
+
+  - platform: pulse_meter
+    id: pulse_garage
+    pin:
+      number: GPIO14
+      mode: INPUT_PULLUP
+    name: "Débitmètre Eau Garage (pulses/min)"
+    internal_filter: 100us
+    accuracy_decimals: 0
+    timeout: 5s
+    total:
+      id: pulse_garage_total
+      name: "Volume Eau Garage brut"
+      unit_of_measurement: "pulses"
+      accuracy_decimals: 0
+    filters:
+      - multiply: 1.0
+
+  - platform: pulse_meter
+    id: pulse_cumulus
+    pin:
+      number: GPIO19
+      mode: INPUT_PULLUP
+    name: "Débitmètre Eau Cumulus (pulses/min)"
+    internal_filter: 100us
+    accuracy_decimals: 0
+    timeout: 5s
+    total:
+      id: pulse_cumulus_total
+      name: "Volume Eau Cumulus brut"
+      unit_of_measurement: "pulses"
+      accuracy_decimals: 0
+    filters:
+      - multiply: 1.0
+
+  - platform: template
+    name: "Débit Eau Maison (L/min)"
+    id: debit_maison
+    unit_of_measurement: "L/min"
+    accuracy_decimals: 2
+    update_interval: 3s
+    filters:
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 1
+    lambda: |-
+      if (id(pulse_maison).state > 0 && id(ppl_maison).state > 0) {
+        return id(pulse_maison).state / id(ppl_maison).state;
+      } else {
+        return 0;
+      }
+
+  - platform: template
+    name: "Débit Eau Garage (L/min)"
+    id: debit_garage
+    unit_of_measurement: "L/min"
+    accuracy_decimals: 2
+    update_interval: 3s
+    filters:
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 1
+    lambda: |-
+      if (id(pulse_garage).state > 0 && id(ppl_garage).state > 0) {
+        return id(pulse_garage).state / id(ppl_garage).state;
+      } else {
+        return 0;
+      }
+
+  - platform: template
+    name: "Débit Eau Cumulus (L/min)"
+    id: debit_cumulus
+    unit_of_measurement: "L/min"
+    accuracy_decimals: 2
+    update_interval: 3s
+    filters:
+      - sliding_window_moving_average:
+          window_size: 3
+          send_every: 1
+    lambda: |-
+      if (id(pulse_cumulus).state > 0 && id(ppl_cumulus).state > 0) {
+        return id(pulse_cumulus).state / id(ppl_cumulus).state;
+      } else {
+        return 0;
+      }
+
+  - platform: template
+    name: "Volume Eau Maison (L)"
+    id: volume_maison
+    unit_of_measurement: "L"
+    accuracy_decimals: 2
+    lambda: |-
+      if (id(ppl_maison).state > 0) {
+        return id(pulse_maison_total).state / id(ppl_maison).state;
+      } else {
+        return 0;
+      }
+
+  - platform: template
+    name: "Volume Eau Garage (L)"
+    id: volume_garage
+    unit_of_measurement: "L"
+    accuracy_decimals: 2
+    lambda: |-
+      if (id(ppl_garage).state > 0) {
+        return id(pulse_garage_total).state / id(ppl_garage).state;
+      } else {
+        return 0;
+      }
+
+  - platform: template
+    name: "Volume Eau Cumulus (L)"
+    id: volume_cumulus
+    unit_of_measurement: "L"
+    accuracy_decimals: 2
+    lambda: |-
+      if (id(ppl_cumulus).state > 0) {
+        return id(pulse_cumulus_total).state / id(ppl_cumulus).state;
+      } else {
+        return 0;
+      }
+
+button:
+  - platform: template
+    name: "🔁 Réinitialiser Volumes Débitmètres"
+    on_press:
+      - lambda: |-
+          id(pulse_maison_total).publish_state(0);
+          id(pulse_garage_total).publish_state(0);
+          id(pulse_cumulus_total).publish_state(0);
