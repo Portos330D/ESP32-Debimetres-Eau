@@ -1,1 +1,10 @@
 
+eau_maison_jour:
+  source: sensor.volume_eau_maison_l
+  cycle: daily
+eau_garage_jour:
+  source: sensor.volume_eau_garage_l
+  cycle: daily
+eau_cumulus_jour:
+  source: sensor.volume_eau_cumulus_l
+  cycle: daily
