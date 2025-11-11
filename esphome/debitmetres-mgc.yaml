@@ -1,4 +1,14 @@
 
+# ============================================================
+#  Projet : Débitmètres Eau ESP32 – ESPHome
+#  Auteur : Portos330D (Jérémy)
+#  Version : 1.0 – 2025
+#  Licence : MIT
+#  Description :
+#     Mesure et suivi de la consommation d’eau (Maison / Garage / Cumulus)
+#     via des débitmètres YF-B5 / YF-B6 / YF-S201.
+# ============================================================
+
 esphome:
   name: debitmetres-eau
   friendly_name: Débitmètres Eau Maison / Garage / Cumulus
@@ -19,10 +29,14 @@ api:
 ota:
   platform: esphome
 
+# ======================================================
+# 🔧 Calibration impulsions/Litre
+# ======================================================
 number:
   - platform: template
     name: "Impulsions/Litre Eau Maison"
     id: ppl_maison
+    unique_id: calib_eau_maison
     optimistic: true
     min_value: 200
     max_value: 800
@@ -34,6 +48,7 @@ number:
   - platform: template
     name: "Impulsions/Litre Eau Garage"
     id: ppl_garage
+    unique_id: calib_eau_garage
     optimistic: true
     min_value: 200
     max_value: 800
@@ -45,6 +60,7 @@ number:
   - platform: template
     name: "Impulsions/Litre Eau Cumulus"
     id: ppl_cumulus
+    unique_id: calib_eau_cumulus
     optimistic: true
     min_value: 200
     max_value: 800
@@ -53,9 +69,14 @@ number:
     initial_value: 664
     unit_of_measurement: "pulses/L"
 
+# ======================================================
+# 💧 Capteurs bruts (impulsions)
+# ======================================================
 sensor:
+  # --- Eau Maison ---
   - platform: pulse_meter
     id: pulse_maison
+    unique_id: pulse_maison_raw
     pin:
       number: GPIO13
       mode: INPUT_PULLUP
@@ -65,14 +86,17 @@ sensor:
     timeout: 5s
     total:
       id: pulse_maison_total
+      unique_id: pulse_maison_total
       name: "Volume Eau Maison brut"
       unit_of_measurement: "pulses"
       accuracy_decimals: 0
     filters:
       - multiply: 1.0
 
+  # --- Eau Garage ---
   - platform: pulse_meter
     id: pulse_garage
+    unique_id: pulse_garage_raw
     pin:
       number: GPIO14
       mode: INPUT_PULLUP
@@ -82,14 +106,17 @@ sensor:
     timeout: 5s
     total:
       id: pulse_garage_total
+      unique_id: pulse_garage_total
       name: "Volume Eau Garage brut"
       unit_of_measurement: "pulses"
       accuracy_decimals: 0
     filters:
       - multiply: 1.0
 
+  # --- Eau Cumulus ---
   - platform: pulse_meter
     id: pulse_cumulus
+    unique_id: pulse_cumulus_raw
     pin:
       number: GPIO19
       mode: INPUT_PULLUP
@@ -99,15 +126,20 @@ sensor:
     timeout: 5s
     total:
       id: pulse_cumulus_total
+      unique_id: pulse_cumulus_total
       name: "Volume Eau Cumulus brut"
       unit_of_measurement: "pulses"
       accuracy_decimals: 0
     filters:
       - multiply: 1.0
 
+# ======================================================
+# ⚙️ Débits calculés L/min (stables)
+# ======================================================
   - platform: template
     name: "Débit Eau Maison (L/min)"
     id: debit_maison
+    unique_id: debit_eau_maison
     unit_of_measurement: "L/min"
     accuracy_decimals: 2
     update_interval: 3s
@@ -125,6 +157,7 @@ sensor:
   - platform: template
     name: "Débit Eau Garage (L/min)"
     id: debit_garage
+    unique_id: debit_eau_garage
     unit_of_measurement: "L/min"
     accuracy_decimals: 2
     update_interval: 3s
@@ -142,6 +175,7 @@ sensor:
   - platform: template
     name: "Débit Eau Cumulus (L/min)"
     id: debit_cumulus
+    unique_id: debit_eau_cumulus
     unit_of_measurement: "L/min"
     accuracy_decimals: 2
     update_interval: 3s
@@ -156,9 +190,13 @@ sensor:
         return 0;
       }
 
+# ======================================================
+# 📊 Volumes totaux calculés
+# ======================================================
   - platform: template
     name: "Volume Eau Maison (L)"
     id: volume_maison
+    unique_id: volume_eau_maison
     unit_of_measurement: "L"
     accuracy_decimals: 2
     lambda: |-
@@ -171,6 +209,7 @@ sensor:
   - platform: template
     name: "Volume Eau Garage (L)"
     id: volume_garage
+    unique_id: volume_eau_garage
     unit_of_measurement: "L"
     accuracy_decimals: 2
     lambda: |-
@@ -183,6 +222,7 @@ sensor:
   - platform: template
     name: "Volume Eau Cumulus (L)"
     id: volume_cumulus
+    unique_id: volume_eau_cumulus
     unit_of_measurement: "L"
     accuracy_decimals: 2
     lambda: |-
@@ -192,9 +232,13 @@ sensor:
         return 0;
       }
 
+# ======================================================
+# 🔁 Bouton Reset total
+# ======================================================
 button:
   - platform: template
     name: "🔁 Réinitialiser Volumes Débitmètres"
+    unique_id: reset_volumes_debitmetres
     on_press:
       - lambda: |-
           id(pulse_maison_total).publish_state(0);
