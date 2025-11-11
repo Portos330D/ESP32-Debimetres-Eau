@@ -2,9 +2,44 @@
 eau_maison_jour:
   source: sensor.volume_eau_maison_l
   cycle: daily
+  unique_id: eau_maison_jour
+
+eau_maison_semaine:
+  source: sensor.volume_eau_maison_l
+  cycle: weekly
+  unique_id: eau_maison_semaine
+
+eau_maison_mois:
+  source: sensor.volume_eau_maison_l
+  cycle: monthly
+  unique_id: eau_maison_mois
+
 eau_garage_jour:
   source: sensor.volume_eau_garage_l
   cycle: daily
+  unique_id: eau_garage_jour
+
+eau_garage_semaine:
+  source: sensor.volume_eau_garage_l
+  cycle: weekly
+  unique_id: eau_garage_semaine
+
+eau_garage_mois:
+  source: sensor.volume_eau_garage_l
+  cycle: monthly
+  unique_id: eau_garage_mois
+
 eau_cumulus_jour:
   source: sensor.volume_eau_cumulus_l
   cycle: daily
+  unique_id: eau_cumulus_jour
+
+eau_cumulus_semaine:
+  source: sensor.volume_eau_cumulus_l
+  cycle: weekly
+  unique_id: eau_cumulus_semaine
+
+eau_cumulus_mois:
+  source: sensor.volume_eau_cumulus_l
+  cycle: monthly
+  unique_id: eau_cumulus_mois
