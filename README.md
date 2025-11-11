@@ -59,12 +59,31 @@ Voici un aperçu du tableau de bord complet permettant de suivre en temps réel 
 > `gauge`, `entities`, `history-graph`, et `apexcharts-card` (facultatif).  
 > Aucun module HACS requis.
 
-## 📄 Structure
-```
+## 📁 Structure du projet
+
+L’organisation du dépôt permet une intégration rapide dans Home Assistant et ESPHome.
+
 ESP32-Debimetres-Eau/
- ├── README.md
- ├── /esphome/debitmetres-mgc.yaml
- ├── /homeassistant/utility_meter.yaml
- ├── SECRETS_EXAMPLE.yaml
- └── LICENSE
+├── README.md # Documentation complète du projet
+├── LICENSE # Licence MIT (libre et ouverte)
+├── SECRETS_EXAMPLE.yaml # Exemple de fichier secrets.yaml
+├── /esphome/ # Code ESPHome à flasher sur l’ESP32
+│ └── debitmetres-mgc.yaml
+├── /homeassistant/ # Fichiers à intégrer dans Home Assistant
+│ └── utility_meter.yaml
+└── /images/ # Illustrations du montage et aperçus HA
+├── boitier_esp32.jpg
+├── cable_dupont_1.jpg
+├── cable_dupont_2.jpg
+├── apercu_1.png
+└── apercu_2.jpg
+
+yaml
+Copier le code
+
+> 🧩 **Conseil :**  
+> - Copie le fichier `debitmetres-mgc.yaml` dans ton répertoire ESPHome.  
+> - Adapte ton `secrets.yaml` avec ton Wi-Fi.  
+> - Ajoute `utility_meter.yaml` dans ton dossier Home Assistant.  
+> - Puis redémarre Home Assistant pour voir les capteurs apparaître.
 ```
