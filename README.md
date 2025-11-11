@@ -46,6 +46,19 @@ Quelques photos du montage final pour aider à la reproduction du projet :
 | ![Câbles connecteurs](images/cable_dupont_1.jpg) | Exemple de câbles Dupont 4 fils utilisés pour raccorder les débitmètres. |
 | ![Connecteurs rapides](images/cable_dupont_2.jpg) | Connecteurs rapides avec détrompeur pour éviter les inversions de polarité. |
 
+## 📊 Aperçu du tableau de bord Home Assistant
+
+Voici un aperçu du tableau de bord complet permettant de suivre en temps réel les débits et consommations d’eau (Maison, Garage, Cumulus).
+
+| Capture | Description |
+|----------|--------------|
+| ![Aperçu Home Assistant - Partie 1](images/apercu_1.png) | Affichage des débits instantanés, de la consommation journalière et du suivi hebdomadaire/mensuel/annuel avec indicateurs colorés et graphiques. |
+| ![Aperçu Home Assistant - Partie 2](images/apercu_2.jpg) | Vue complémentaire avec graphique des 7 derniers jours, récapitulatif Utility Meters et estimation automatique des coûts journaliers/mensuels/annuels. |
+
+> 🧩 Ces cartes utilisent uniquement des cartes standard de Home Assistant :  
+> `gauge`, `entities`, `history-graph`, et `apexcharts-card` (facultatif).  
+> Aucun module HACS requis.
+
 ## 📄 Structure
 ```
 ESP32-Debimetres-Eau/
