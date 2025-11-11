@@ -5,6 +5,22 @@ Suivi précis de la consommation d’eau avec un ESP32 et des débitmètres YF-B
 
 ## 📺 Tutoriel vidéo
 > [Installer ESPHome sur Home Assistant et flasher un ESP32](https://youtu.be/3GbyYQHQvV8?si=5LLoGJLGmdWvFfUk)
+>
+## 🧰 Matériel utilisé (Hardware)
+
+Voici la liste complète des composants utilisés pour reproduire le projet **Débitmètres Eau ESP32 – Maison / Garage / Cumulus**.
+
+| Élément | Description | Lien |
+|----------|--------------|------|
+| 🧠 **ESP32 DevKit v1 (38 broches)** | Carte microcontrôleur utilisée pour le traitement et la communication avec Home Assistant via ESPHome | [AliExpress](https://a.aliexpress.com/_EJcmddO) |
+| 💧 **Débitmètre YF-B5 / YF-B6 / YF-S201** | Capteurs à effet Hall mesurant le débit d’eau par impulsions. Un capteur par zone (Maison, Garage, Cumulus) | [AliExpress](https://a.aliexpress.com/_Exk3gqM) |
+| 🔌 **Connecteurs / câbles Dupont + alimentation 5V stable** | Pour relier les débitmètres à l’ESP32 (alimentation + signal) | [AliExpress](https://a.aliexpress.com/_EuTxiIc) |
+| 🧱 **Boîtier 3D ESP32 – 38 pin Snap Fit Case** | Boîtier imprimé en 3D (version testée par Jérémy). Permet une installation propre et sécurisée de l’ESP32 | [Printables.com – ESP32 38 Pin Breakout Case](https://www.printables.com/model/739842-esp32-38-pin-breakout-board-case-snap-fit-lid) |
+
+> ⚙️ **Astuce :**  
+> - Le VCC des débitmètres est branché sur le **5V (VIN)** de l’ESP32.  
+> - Le GND est commun.  
+> - Les signaux sont reliés aux **GPIO13**, **GPIO14** et **GPIO19**, avec `mode: INPUT_PULLUP` activé dans le code ESPHome.
 
 ## 🧩 Étapes d’installation
 1. Copier `esphome/debitmetres-mgc.yaml` dans ESPHome.
