@@ -87,3 +87,5 @@ Copier le code
 > - Ajoute `utility_meter.yaml` dans ton dossier Home Assistant.  
 > - Puis redémarre Home Assistant pour voir les capteurs apparaître.
 ```
+
+🛠️ Développé avec ❤️ par [Portos](https://github.com/Portos330D)
