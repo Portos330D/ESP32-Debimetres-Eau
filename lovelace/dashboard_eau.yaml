@@ -1,1 +1,161 @@
+title: 💧 Suivi Eau – Maison / Garage / Cumulus
+path: eau
+icon: mdi:water-pump
+type: vertical-stack
+cards:
+  # =====================================================
+  # 🚰 Débits instantanés
+  # =====================================================
+  - type: entities
+    title: 🔹 Débits instantanés
+    show_header_toggle: false
+    entities:
+      - entity: sensor.debit_eau_maison
+        name: Débit Eau Maison
+      - entity: sensor.debit_eau_garage
+        name: Débit Eau Garage
+      - entity: sensor.debit_eau_cumulus
+        name: Débit Eau Cumulus
 
+  # =====================================================
+  # 📊 Volumes totaux
+  # =====================================================
+  - type: entities
+    title: 🔹 Volumes totaux (en L)
+    show_header_toggle: false
+    entities:
+      - entity: sensor.volume_eau_maison
+        name: Volume Eau Maison
+      - entity: sensor.volume_eau_garage
+        name: Volume Eau Garage
+      - entity: sensor.volume_eau_cumulus
+        name: Volume Eau Cumulus
+
+  # =====================================================
+  # 🧮 Compteurs journaliers, hebdo et mensuels
+  # =====================================================
+  - type: entities
+    title: 🔹 Compteurs Home Assistant (utility_meter)
+    show_header_toggle: false
+    entities:
+      - entity: sensor.eau_maison_jour
+        name: Eau Maison - Jour
+      - entity: sensor.eau_maison_semaine
+        name: Eau Maison - Semaine
+      - entity: sensor.eau_maison_mois
+        name: Eau Maison - Mois
+      - entity: sensor.eau_garage_jour
+        name: Eau Garage - Jour
+      - entity: sensor.eau_garage_semaine
+        name: Eau Garage - Semaine
+      - entity: sensor.eau_garage_mois
+        name: Eau Garage - Mois
+      - entity: sensor.eau_cumulus_jour
+        name: Eau Cumulus - Jour
+      - entity: sensor.eau_cumulus_semaine
+        name: Eau Cumulus - Semaine
+      - entity: sensor.eau_cumulus_mois
+        name: Eau Cumulus - Mois
+
+  # =====================================================
+  # 📆 Graphique - Eau Maison
+  # =====================================================
+  - type: custom:apexcharts-card
+    header:
+      show: true
+      title: 📆 Eau Maison – 7 derniers jours
+    graph_span: 7d
+    span:
+      start: day
+    series:
+      - entity: sensor.eau_maison_jour
+        type: column
+        name: Maison (L)
+        show:
+          datalabels: true
+    apex_config:
+      chart:
+        height: 250
+        toolbar:
+          show: false
+      dataLabels:
+        enabled: true
+        style:
+          fontSize: 12px
+      yaxis:
+        title:
+          text: Litres
+      xaxis:
+        type: datetime
+
+  # =====================================================
+  # 📆 Graphique - Eau Garage
+  # =====================================================
+  - type: custom:apexcharts-card
+    header:
+      show: true
+      title: 📆 Eau Garage – 7 derniers jours
+    graph_span: 7d
+    span:
+      start: day
+    series:
+      - entity: sensor.eau_garage_jour
+        type: column
+        name: Garage (L)
+        show:
+          datalabels: true
+    apex_config:
+      chart:
+        height: 250
+        toolbar:
+          show: false
+      dataLabels:
+        enabled: true
+        style:
+          fontSize: 12px
+      yaxis:
+        title:
+          text: Litres
+      xaxis:
+        type: datetime
+
+  # =====================================================
+  # 📆 Graphique - Eau Cumulus
+  # =====================================================
+  - type: custom:apexcharts-card
+    header:
+      show: true
+      title: 📆 Eau Cumulus – 7 derniers jours
+    graph_span: 7d
+    span:
+      start: day
+    series:
+      - entity: sensor.eau_cumulus_jour
+        type: column
+        name: Cumulus (L)
+        show:
+          datalabels: true
+    apex_config:
+      chart:
+        height: 250
+        toolbar:
+          show: false
+      dataLabels:
+        enabled: true
+        style:
+          fontSize: 12px
+      yaxis:
+        title:
+          text: Litres
+      xaxis:
+        type: datetime
+
+  # =====================================================
+  # 🔁 Bouton reset
+  # =====================================================
+  - type: entities
+    title: 🔹 Réinitialisation manuelle
+    show_header_toggle: false
+    entities:
+      - entity: button.reset_volumes_debitmetres
+        name: Réinitialiser tous les volumes
