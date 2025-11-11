@@ -36,6 +36,16 @@ pulses/L = total_pulses / volume_en_L
 ```
 Exemple : 1565 pulses pour 5 L → 313 pulses/L.
 
+## 📸 Illustrations & Montage
+
+Quelques photos du montage final pour aider à la reproduction du projet :
+
+| Illustration | Description |
+|---------------|-------------|
+| ![ESP32 dans son boîtier](images/esp32_boîtier.jpg) | L’ESP32 DevKit v1 installé dans le boîtier 3D (Printables). Connexions via borniers latéraux, alimentation 5V et câbles Dupont. |
+| ![Câbles connecteurs](images/cables_connecteurs_1.jpg) | Exemple de câbles Dupont 4 fils utilisés pour raccorder les débitmètres. |
+| ![Connecteurs rapides](images/cables_connecteurs_2.jpg) | Connecteurs rapides avec détrompeur pour éviter les inversions de polarité. |
+
 ## 📄 Structure
 ```
 ESP32-Debimetres-Eau/
