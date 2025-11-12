@@ -12,8 +12,8 @@ Voici la liste complète des composants utilisés pour reproduire le projet **D�
 
 | Élément | Description | Lien |
 |----------|--------------|------|
-| 🧠 **ESP32 DevKit v1 (38 broches)** | Carte microcontrôleur utilisée pour le traitement et la communication avec Home Assistant via ESPHome | [AliExpress](https://a.aliexpress.com/_EJcmddO) |
-| 💧 **Débitmètre YF-B5 / YF-B6 / YF-S201** | Capteurs à effet Hall mesurant le débit d’eau par impulsions. Un capteur par zone (Maison, Garage, Cumulus) | [AliExpress](https://a.aliexpress.com/_Exk3gqM) |
+| 🧠 **ESP32 DevKit v1 (38 broches)** | Carte microcontrôleur utilisée pour le traitement et la communication avec Home Assistant via ESPHome | [AliExpress](https://a.aliexpress.com/_Exk3gqM)) |
+| 💧 **Débitmètre YF-B5 / YF-B6 / YF-S201** | Capteurs à effet Hall mesurant le débit d’eau par impulsions. Un capteur par zone (Maison, Garage, Cumulus) | [AliExpress](https://a.aliexpress.com/_EJcmddO)) |
 | 🔌 **Connecteurs / câbles Dupont + alimentation 5V stable** | Pour relier les débitmètres à l’ESP32 (alimentation + signal) | [AliExpress](https://a.aliexpress.com/_EuTxiIc) |
 | 🧱 **Boîtier 3D ESP32 – 38 pin Snap Fit Case** | Boîtier imprimé en 3D (version testée par Jérémy). Permet une installation propre et sécurisée de l’ESP32 | [Printables.com – ESP32 38 Pin Breakout Case](https://www.printables.com/model/739842-esp32-38-pin-breakout-board-case-snap-fit-lid) |
 
